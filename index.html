@@ -3,59 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northern Logistics — Invoice Generator Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Northern Logistics — Invoice Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a2e;--purple:#2d1b69;--red:#d0021b;--gold:#c9a84c;--silver:#8892a4;--bg:#f0ede6;--card:#fff;--border:#ddd8cc;--row-hover:#f9f7f3;--panel-bg:#1e1240;}
+:root{--ink:#1a1a2e;--purple:#2d1b69;--red:#d0021b;--gold:#c9a84c;--silver:#8892a4;--bg:#f0ede6;--card:#fff;--border:#ddd8cc;--panel-bg:#1e1240;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
 #app{display:grid;grid-template-columns:295px 1fr;grid-template-rows:auto 1fr;min-height:100vh;}
-#sidebar{grid-row:1/3;background:var(--panel-bg);color:#fff;padding:18px 14px;display:flex;flex-direction:column;gap:11px;overflow-y:auto;border-right:1px solid rgba(255,255,255,0.1);}
+
+/* SIDEBAR & TOPBAR */
+#sidebar{grid-row:1/3;background:var(--panel-bg);color:#fff;padding:18px 14px;display:flex;flex-direction:column;gap:11px;overflow-y:auto;}
 #topbar{background:var(--card);border-bottom:1px solid var(--border);padding:11px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
-#main{padding:16px 20px;overflow-y:auto;}
+#main{padding:16px 20px;}
 .sidebar-logo{display:flex;align-items:center;gap:9px;padding-bottom:11px;border-bottom:1px solid rgba(255,255,255,.07);}
-.logo-circle{width:34px;height:34px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;flex-shrink:0;}
-.sidebar-logo h1{font-family:'DM Serif Display',serif;font-size:12px;line-height:1.3;color:#e8e4ff;}
-.sidebar-logo h1 span{display:block;font-size:9px;color:rgba(255,255,255,.35);font-weight:400;}
-.sec-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:4px;}
-.fi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:5px;color:#fff;padding:6px 8px;font-size:10px;outline:none;width:100%;margin-bottom:8px;}
-.btn-gold{background:var(--gold);color:#1a0a00;border:none;padding:10px;border-radius:6px;font-weight:700;cursor:pointer;width:100%;font-size:11px;transition:0.2s;}
-.btn-gold:hover{background:#dbb956;}
-.tbtn{padding:8px 16px;border-radius:6px;border:none;font-weight:600;cursor:pointer;font-size:11px;}
+.logo-circle{width:34px;height:34px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;}
+.sidebar-logo h1{font-family:'DM Serif Display',serif;font-size:12px;color:#e8e4ff;}
+.sec-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-top:10px;}
+.fi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:5px;color:#fff;padding:8px;font-size:10px;width:100%;margin-bottom:10px;}
+.btn-gold{background:var(--gold);color:#1a0a00;border:none;padding:10px;border-radius:6px;font-weight:700;cursor:pointer;width:100%;font-size:11px;}
+.tbtn{padding:8px 15px;border-radius:6px;border:none;font-weight:600;cursor:pointer;font-size:11px;}
 .tbtn-purple{background:var(--purple);color:#fff;}
 .tbtn-red{background:var(--red);color:#fff;}
+
+/* TABLE PREVIEW */
 .tbl-wrap{background:#fff;border-radius:8px;border:1px solid var(--border);overflow:hidden;}
 table{width:100%;border-collapse:collapse;font-size:11px;}
-thead th{background:#f4f4f4;padding:10px;text-align:left;color:var(--silver);text-transform:uppercase;letter-spacing:1px;font-size:9px;}
+thead th{background:#2d1b69;padding:10px;text-align:left;color:#fff;text-transform:uppercase;font-size:9px;}
 tbody td{padding:10px;border-bottom:1px solid #eee;}
 
-/* INVOICE MODAL & PAPER */
-#inv-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;padding:20px;overflow-y:auto;justify-content:center;}
+/* INVOICE MODAL (THE PAPER) */
+#inv-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;padding:20px;overflow-y:auto;justify-content:center;}
 #inv-modal.open{display:flex;}
-.modal-inner{width:850px;background:#fff;border-radius:8px;position:relative;}
-#inv-paper{padding:40px;background:#fff;min-height:1050px;color:#1a1a1a;--sz-table:11px;display:flex;flex-direction:column;}
-.inv-hdr{display:flex;justify-content:space-between;margin-bottom:30px;}
-.inv-coname{font-size:24px;font-weight:900;display:block;}
-.inv-cosub{font-size:10px;letter-spacing:4px;color:var(--gold);}
-.inv-titlebar{background:var(--purple);color:#fff;text-align:center;padding:10px;font-weight:700;letter-spacing:5px;margin:20px 0;}
-.inv-meta{display:flex;justify-content:space-between;margin-bottom:20px;}
-.inv-field{margin-bottom:5px;font-size:12px;display:flex;gap:10px;}
-.inv-field strong{width:90px;}
-.inv-field .val{border-bottom:1px solid #eee;flex:1;min-width:100px;}
-.inv-table{width:100%;border-collapse:collapse;margin:20px 0;}
-.inv-table th{background:var(--purple);color:#fff;padding:10px;}
-.inv-table td{padding:10px;border-bottom:1px solid #eee;}
+.modal-inner{width:800px;background:#fff;border-radius:8px;position:relative;margin-bottom:50px;}
+.edit-bar{background:#2d1b69;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;border-top-left-radius:8px;border-top-right-radius:8px;}
+
+#inv-paper{padding:50px;background:#fff;color:#1a1a1a;display:flex;flex-direction:column;min-height:1050px;}
+.inv-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;}
+.inv-logo-text .name{font-size:26px;font-weight:900;font-family:'DM Serif Display',serif;color:var(--purple);display:block;}
+.inv-logo-text .sub{font-size:10px;letter-spacing:4px;color:var(--gold);display:block;}
+.inv-titlebar{background:var(--purple);color:#fff;text-align:center;padding:10px;font-weight:700;letter-spacing:6px;margin:20px 0;border-radius:2px;}
+.inv-meta{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:20px;}
+.inv-field{margin-bottom:8px;font-size:12px;display:flex;border-bottom:1px solid #eee;padding-bottom:3px;}
+.inv-field strong{width:100px;color:#555;}
+.inv-field .val{flex:1;font-weight:600;}
+
+.inv-table{width:100%;border-collapse:collapse;margin:30px 0;}
+.inv-table th{background:#f8f9fa;color:var(--purple);padding:12px;border-bottom:2px solid var(--purple);text-align:left;}
+.inv-table td{padding:12px;border-bottom:1px solid #eee;vertical-align:top;}
 .tc{text-align:center;}.tr{text-align:right;}
-.inv-total-row{display:flex;justify-content:flex-end;margin-top:20px;font-size:16px;font-weight:700;}
-.total-val{color:var(--red);margin-left:10px;}
-.edit-bar{background:#fff3cd;padding:10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffeeba;}
+.inv-total-row{display:flex;justify-content:flex-end;margin-top:20px;font-size:18px;font-weight:900;border-top:2px solid #1a1a1a;padding-top:10px;}
+.total-val{color:var(--red);margin-left:15px;}
 
 @media print {
     body * { display: none !important; }
     #inv-modal, #inv-modal * { display: block !important; }
-    .edit-bar, .btn-close { display: none !important; }
-    #inv-modal { position: absolute; left: 0; top: 0; background: white; }
-    #inv-paper { padding: 0; margin: 0; box-shadow: none; }
+    .edit-bar, #sidebar, #topbar { display: none !important; }
+    #inv-modal { position: absolute; inset:0; background:white; padding:0; }
 }
 </style>
 </head>
@@ -67,22 +70,21 @@ tbody td{padding:10px;border-bottom:1px solid #eee;}
             <div class="logo-circle">N</div>
             <h1>Northern Logistics<span>Invoice Generator</span></h1>
         </div>
-        <div class="sec-label">Sheet URL</div>
+        <div class="sec-label">Data Import</div>
         <input type="text" id="sheet-url" class="fi" placeholder="Paste Google Sheet URL...">
-        <button class="btn-gold" onclick="loadSheet()">Load Data</button>
+        <button class="btn-gold" onclick="loadSheet()">Load Sheet</button>
         
-        <div id="colmap-panel" style="margin-top:20px;">
+        <div id="mapping-panel" style="margin-top:15px;">
             <div class="sec-label">Column Mapping</div>
-            <div id="mapping-area" style="font-size:10px; color:rgba(255,255,255,0.6)">
-                </div>
+            <div id="mapping-area"></div>
         </div>
     </aside>
 
     <main>
         <header id="topbar">
-            <div><h2>Data Preview</h2><p id="row-count">0 rows loaded</p></div>
+            <div><h2 style="font-family:'DM Serif Display'">Inventory List</h2><p id="row-count" style="font-size:10px; color:var(--silver)">0 rows loaded</p></div>
             <div class="topbar-actions">
-                <button class="tbtn tbtn-purple" onclick="selectAll()">Select All</button>
+                <button class="tbtn" onclick="selectAll()">Select All</button>
                 <button class="tbtn tbtn-red" onclick="generateInvoice()">Generate Invoice &rarr;</button>
             </div>
         </header>
@@ -96,7 +98,7 @@ tbody td{padding:10px;border-bottom:1px solid #eee;}
                         </tr>
                     </thead>
                     <tbody id="tbl-body">
-                        <tr><td colspan="6" style="text-align:center; padding:40px;">Load a Google Sheet to see data.</td></tr>
+                        <tr><td colspan="6" style="text-align:center; padding:50px; color:var(--silver)">No data loaded. Paste a URL and click "Load Sheet".</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -107,43 +109,46 @@ tbody td{padding:10px;border-bottom:1px solid #eee;}
 <div id="inv-modal">
     <div class="modal-inner">
         <div class="edit-bar">
-            <span><strong>Mode:</strong> You can edit any text directly on the invoice.</span>
-            <button class="tbtn tbtn-purple" onclick="window.print()">Print / Save PDF</button>
-            <button class="tbtn" onclick="closeModal()">Close</button>
+            <span style="font-size:11px;">Preview Mode: Edit text directly on paper if needed.</span>
+            <div>
+                <button class="tbtn tbtn-red" onclick="window.print()">Print / Save PDF</button>
+                <button class="tbtn" onclick="closeModal()" style="background:rgba(255,255,255,0.2); color:#fff; margin-left:10px;">Close</button>
+            </div>
         </div>
         <div id="inv-paper">
             <div class="inv-hdr">
-                <div>
-                    <span class="inv-coname">Northern Logistics</span>
-                    <span class="inv-cosub">INTERNATIONAL FREIGHT FORWARDING</span>
+                <div class="inv-logo-text">
+                    <span class="name">Northern Logistics</span>
+                    <span class="sub">INTERNATIONAL FREIGHT FORWARDING</span>
                 </div>
-                <div class="tr" style="font-size:11px;" contenteditable="true">
-                    Dhaka, Bangladesh<br>info@northernlogistics.com<br>+880 1XXX-XXXXXX
+                <div class="tr" style="font-size:11px; line-height:1.6;" contenteditable="true">
+                    Road 04, House 12, Sector 09<br>Uttara, Dhaka, Bangladesh<br>+880 1XXX-XXXXXX
                 </div>
             </div>
             <div class="inv-titlebar">INVOICE</div>
             <div class="inv-meta">
-                <div class="inv-meta-left">
+                <div>
                     <div class="inv-field"><strong>Bill To:</strong><span class="val" id="disp-name" contenteditable="true"></span></div>
                     <div class="inv-field"><strong>Address:</strong><span class="val" id="disp-addr" contenteditable="true"></span></div>
+                    <div class="inv-field"><strong>Mobile:</strong><span class="val" id="disp-mob" contenteditable="true"></span></div>
                 </div>
-                <div class="inv-meta-right">
-                    <div class="inv-field"><strong>Date:</strong><span class="val" id="disp-date" contenteditable="true"></span></div>
-                    <div class="inv-field"><strong>Mark:</strong><span class="val" id="disp-mark" contenteditable="true"></span></div>
+                <div>
+                    <div class="inv-field"><strong>Invoice Date:</strong><span class="val" id="disp-date" contenteditable="true"></span></div>
+                    <div class="inv-field"><strong>Ship Mark:</strong><span class="val" id="disp-mark" contenteditable="true"></span></div>
+                    <div class="inv-field"><strong>Tracking:</strong><span class="val" id="disp-track" contenteditable="true"></span></div>
                 </div>
             </div>
             <table class="inv-table">
                 <thead>
                     <tr>
-                        <th style="text-align:left">Description</th>
+                        <th style="width:40%">Description</th>
                         <th class="tc">Weight</th>
                         <th class="tc">Unit</th>
                         <th class="tr">Rate</th>
                         <th class="tr">Total</th>
                     </tr>
                 </thead>
-                <tbody id="inv-tbl-body">
-                    </tbody>
+                <tbody id="inv-tbl-body"></tbody>
             </table>
             <div class="inv-total-row">
                 GRAND TOTAL: <span class="total-val" id="disp-total">0.00</span>
@@ -155,45 +160,40 @@ tbody td{padding:10px;border-bottom:1px solid #eee;}
 <script>
 let rawData = [];
 let headers = [];
-const fields = ['Name', 'Address', 'Mobile', 'ShippingMark', 'ShippingNumber', 'Description', 'Weight', 'Unit', 'Cost', 'Total', 'Date'];
+const fieldMap = ['Name', 'Address', 'Mobile', 'ShippingMark', 'TrackingNumber', 'Description', 'Weight', 'Unit', 'Cost', 'Total', 'Date'];
 
-// 1. Fetch Google Sheet Data
 async function loadSheet() {
     const url = document.getElementById('sheet-url').value;
     const sheetId = url.match(/\/d\/([^/]+)/)?.[1];
-    if (!sheetId) return alert("Please enter a valid Google Sheet URL.");
+    if (!sheetId) return alert("Please check the Google Sheet URL.");
     
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
     
     try {
         const res = await fetch(csvUrl);
         const text = await res.text();
-        parseCSV(text);
+        const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim()));
+        headers = rows[0];
+        rawData = rows.slice(1).map(r => {
+            let obj = {};
+            headers.forEach((h, i) => obj[h] = r[i]);
+            return obj;
+        });
+        
+        setupMapping();
+        renderTable();
     } catch (e) {
-        alert("Error: Make sure the sheet is 'Anyone with the link can view'.");
+        alert("Fetch failed. Ensure the sheet is Public.");
     }
 }
 
-function parseCSV(text) {
-    const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim()));
-    headers = rows[0];
-    rawData = rows.slice(1).map(r => {
-        let obj = {};
-        headers.forEach((h, i) => obj[h] = r[i]);
-        return obj;
-    });
-    
-    setupMapping();
-    renderTable();
-}
-
-// 2. Setup Auto-Mapping Dropdowns
 function setupMapping() {
     const container = document.getElementById('mapping-area');
     container.innerHTML = '';
-    fields.forEach(field => {
+    fieldMap.forEach(field => {
         let options = headers.map(h => `<option value="${h}" ${h.toLowerCase().includes(field.toLowerCase()) ? 'selected' : ''}>${h}</option>`).join('');
-        container.innerHTML += `<div style="margin-bottom:5px;">${field}:<br><select id="cm-${field}" style="width:100%; font-size:10px; background:#333; color:#fff; border:1px solid #555;">${options}</select></div>`;
+        container.innerHTML += `<div style="font-size:9px; color:#aaa; margin-bottom:2px;">${field}</div>
+        <select id="cm-${field}" style="width:100%; background:#2a1b5a; color:#fff; border:1px solid #444; font-size:10px; padding:3px; margin-bottom:8px;" onchange="renderTable()">${options}</select>`;
     });
 }
 
@@ -202,7 +202,6 @@ function getVal(row, field) {
     return row[headerName] || "";
 }
 
-// 3. Render Table Preview
 function renderTable() {
     const tbody = document.getElementById('tbl-body');
     tbody.innerHTML = rawData.map((row, i) => `
@@ -215,41 +214,42 @@ function renderTable() {
             <td>${getVal(row, 'Total') || (parseFloat(getVal(row, 'Weight')) * parseFloat(getVal(row, 'Cost')) || 0).toFixed(2)}</td>
         </tr>
     `).join('');
-    document.getElementById('row-count').innerText = `${rawData.length} rows found`;
+    document.getElementById('row-count').innerText = `${rawData.length} items loaded`;
 }
 
-// 4. Generate Invoice (Fixes your reported bugs)
 function generateInvoice() {
     const selected = Array.from(document.querySelectorAll('.row-chk:checked')).map(cb => rawData[cb.dataset.idx]);
-    if (selected.length === 0) return alert("Select rows to include in invoice.");
+    if (selected.length === 0) return alert("No items selected.");
 
     const first = selected[0];
+    
+    // Fill Client Info
     document.getElementById('disp-name').innerText = getVal(first, 'Name');
     document.getElementById('disp-addr').innerText = getVal(first, 'Address');
+    document.getElementById('disp-mob').innerText = getVal(first, 'Mobile');
     document.getElementById('disp-date').innerText = getVal(first, 'Date') || new Date().toLocaleDateString();
     document.getElementById('disp-mark').innerText = getVal(first, 'ShippingMark');
+    document.getElementById('disp-track').innerText = getVal(first, 'TrackingNumber');
 
+    // Fill Product Table
     const invTbody = document.getElementById('inv-tbl-body');
     invTbody.innerHTML = '';
     let grandTotal = 0;
 
     selected.forEach(row => {
-        const w = parseFloat(getVal(row, 'Weight')) || 0;
-        const c = parseFloat(getVal(row, 'Cost')) || 0;
-        let t = parseFloat(getVal(row, 'Total'));
+        const weight = parseFloat(getVal(row, 'Weight')) || 0;
+        const cost = parseFloat(getVal(row, 'Cost')) || 0;
+        let total = parseFloat(getVal(row, 'Total')) || (weight * cost);
         
-        // BUG FIX: If total is missing, calculate it
-        if (isNaN(t)) t = w * c;
-        grandTotal += t;
+        grandTotal += total;
 
-        // BUG FIX: Proper cell alignment
         invTbody.innerHTML += `
             <tr>
-                <td contenteditable="true">${getVal(row, 'Description')}</td>
-                <td class="tc" contenteditable="true">${w}</td>
+                <td contenteditable="true"><strong>${getVal(row, 'Description')}</strong></td>
+                <td class="tc" contenteditable="true">${weight}</td>
                 <td class="tc" contenteditable="true">${getVal(row, 'Unit')}</td>
-                <td class="tr" contenteditable="true">${c.toFixed(2)}</td>
-                <td class="tr" contenteditable="true">${t.toFixed(2)}</td>
+                <td class="tr" contenteditable="true">${cost.toFixed(2)}</td>
+                <td class="tr" contenteditable="true"><strong>${total.toFixed(2)}</strong></td>
             </tr>
         `;
     });
