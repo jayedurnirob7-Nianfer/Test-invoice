@@ -798,12 +798,25 @@ window.downloadPDF=function(){
         clonedSpacer.style.minHeight=spacerH+'px';
       }
 
-      /* FIX: Patch colors reliably on clone instead of fragile manual override */
-      clone.querySelectorAll('.inv-titlebar').forEach(function(el){
-        el.style.backgroundColor='#2d1b69';el.style.color='#ffffff';
-      });
-      clone.querySelectorAll('.inv-table thead th').forEach(function(th){
-        th.style.backgroundColor='#2d1b69';th.style.color='#ffffff';
+      /*
+       * FIX: Snapshot every element's computed style from the LIVE paper
+       * and stamp it as inline styles on the clone. This is the only reliable
+       * way to make html2canvas reproduce class-based colors for off-screen nodes.
+       * We cover background-color, color, border-color, and border-top-color.
+       */
+      var liveEls=paper.querySelectorAll('*');
+      var cloneEls=clone.querySelectorAll('*');
+      var colorProps=['backgroundColor','color','borderTopColor','borderBottomColor','borderLeftColor','borderRightColor'];
+      liveEls.forEach(function(liveEl,i){
+        var cs=window.getComputedStyle(liveEl);
+        var cl=cloneEls[i];if(!cl)return;
+        colorProps.forEach(function(prop){
+          var val=cs[prop];
+          /* Only override if it's a real non-transparent color */
+          if(val&&val!=='rgba(0, 0, 0, 0)'&&val!=='transparent'){
+            cl.style[prop]=val;
+          }
+        });
       });
 
       html2canvas(clone,{
