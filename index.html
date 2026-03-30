@@ -482,14 +482,14 @@ var FONT_DEFAULTS={
 var SPACING_MAP=[
   {cssVar:'--pad-h',     id:'sp-pad-h',       def:'32'},
   {cssVar:'--pad-v',     id:'sp-pad-v',       def:'28'},
-  {cssVar:'--header-top',id:'sp-header-top',  def:'31'},
-  {cssVar:'--header-gap',id:'sp-header-gap',  def:'42'},
-  {cssVar:'--titlebar-my',id:'sp-titlebar-my',def:'18'},
-  {cssVar:'--meta-mb',   id:'sp-meta-mb',     def:'-160'},
-  {cssVar:'--table-my',  id:'sp-table-my',    def:'200'},
-  {cssVar:'--row-py',    id:'sp-row-py',      def:'16'},
-  {cssVar:'--mt-smark',  id:'sp-mt-smark',    def:'-19'},
-  {cssVar:'--mt-name',   id:'sp-mt-name',     def:'20'}
+  {cssVar:'--header-top',id:'sp-header-top',  def:'20'},
+  {cssVar:'--header-gap',id:'sp-header-gap',  def:'-8'},
+  {cssVar:'--titlebar-my',id:'sp-titlebar-my',def:'43'},
+  {cssVar:'--meta-mb',   id:'sp-meta-mb',     def:'60'},
+  {cssVar:'--table-my',  id:'sp-table-my',    def:'6'},
+  {cssVar:'--row-py',    id:'sp-row-py',      def:'8'},
+  {cssVar:'--mt-smark',  id:'sp-mt-smark',    def:'18'},
+  {cssVar:'--mt-name',   id:'sp-mt-name',     def:'10'}
 ];
 
 /* ── Helpers ── */
@@ -776,6 +776,11 @@ window.downloadPDF=function(){
   var overlay=g('pdf-overlay'),btn=g('btn-pdf');
   overlay.classList.add('show');btn.disabled=true;btn.textContent='Generating…';
   var fname=getPdfFilename();
+
+  /* Measure the live spacer height BEFORE cloning — html2canvas ignores flex:1 */
+  var liveSpacer=document.querySelector('#inv-paper .inv-spacer');
+  var spacerH=liveSpacer?liveSpacer.getBoundingClientRect().height:0;
+
   requestAnimationFrame(function(){
     setTimeout(function(){
       var paper=g('inv-paper');
@@ -784,6 +789,14 @@ window.downloadPDF=function(){
       var clone=paper.cloneNode(true);
       clone.style.cssText='width:794px;height:1123px;overflow:hidden;box-shadow:none;margin:0;position:relative;background:#fff;';
       host.appendChild(clone);document.body.appendChild(host);
+
+      /* FIX: Force the spacer to its measured live height — html2canvas doesn't honour flex:1 */
+      var clonedSpacer=clone.querySelector('.inv-spacer');
+      if(clonedSpacer){
+        clonedSpacer.style.flex='none';
+        clonedSpacer.style.height=spacerH+'px';
+        clonedSpacer.style.minHeight=spacerH+'px';
+      }
 
       /* FIX: Patch colors reliably on clone instead of fragile manual override */
       clone.querySelectorAll('.inv-titlebar').forEach(function(el){
