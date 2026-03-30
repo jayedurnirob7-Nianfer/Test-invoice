@@ -146,12 +146,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   overflow:hidden;
   box-shadow:0 4px 28px rgba(0,0,0,.18);
   --pad-h:32px;--pad-v:28px;
-  --header-top:20px;--header-gap:-8px;
-  --titlebar-my:43px;--meta-mb:60px;
-  --table-my:6px;--row-py:8px;--total-mt:8px;--footer-mt:12px;
-  --mt-name:10px;--mt-addr:0px;--mt-mob:0px;
+  --header-top:31px;--header-gap:42px;
+  --titlebar-my:18px;--meta-mb:-160px;
+  --table-my:200px;--row-py:16px;--total-mt:8px;--footer-mt:12px;
+  --mt-name:20px;--mt-addr:0px;--mt-mob:0px;
   --mt-date:0px;--mt-page:0px;
-  --mt-smark:18px;--mt-sno:0px;--mt-tno:0px;
+  --mt-smark:-19px;--mt-sno:0px;--mt-tno:0px;
   --sz-cosub:10px;--sz-contact:11px;--sz-titlebar:19px;
   --sz-field:11px;--sz-table:11px;--sz-total:13px;--sz-banking:11px;--sz-footer:11px;
   padding:var(--pad-v) var(--pad-h);
@@ -327,14 +327,14 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 
       <div class="dr"><span class="dl">Pad horizontal</span><div class="dc"><input type="number" class="si" id="sp-pad-h" value="32" min="0" max="80" oninput="setSP('--pad-h',this.value)"><span class="su">px</span></div></div>
       <div class="dr"><span class="dl">Pad vertical</span><div class="dc"><input type="number" class="si" id="sp-pad-v" value="28" min="0" max="80" oninput="setSP('--pad-v',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Header top</span><div class="dc"><input type="number" class="si" id="sp-header-top" value="20" min="-40" max="80" oninput="setSP('--header-top',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Header gap</span><div class="dc"><input type="number" class="si" id="sp-header-gap" value="-8" min="-60" max="60" oninput="setSP('--header-gap',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Title bar margin</span><div class="dc"><input type="number" class="si" id="sp-titlebar-my" value="43" min="0" max="100" oninput="setSP('--titlebar-my',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Meta bottom</span><div class="dc"><input type="number" class="si" id="sp-meta-mb" value="60" min="0" max="120" oninput="setSP('--meta-mb',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Table margin</span><div class="dc"><input type="number" class="si" id="sp-table-my" value="6" min="0" max="40" oninput="setSP('--table-my',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Row padding</span><div class="dc"><input type="number" class="si" id="sp-row-py" value="8" min="2" max="24" oninput="setSP('--row-py',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Shipping Mark ↑</span><div class="dc"><input type="number" class="si" id="sp-mt-smark" value="18" min="-40" max="80" oninput="setSP('--mt-smark',this.value)"><span class="su">px</span></div></div>
-      <div class="dr"><span class="dl">Name ↑</span><div class="dc"><input type="number" class="si" id="sp-mt-name" value="10" min="-40" max="80" oninput="setSP('--mt-name',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Header top</span><div class="dc"><input type="number" class="si" id="sp-header-top" value="31" min="-40" max="80" oninput="setSP('--header-top',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Header gap</span><div class="dc"><input type="number" class="si" id="sp-header-gap" value="42" min="-60" max="60" oninput="setSP('--header-gap',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Title bar margin</span><div class="dc"><input type="number" class="si" id="sp-titlebar-my" value="18" min="0" max="100" oninput="setSP('--titlebar-my',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Meta bottom</span><div class="dc"><input type="number" class="si" id="sp-meta-mb" value="-160" min="-200" max="120" oninput="setSP('--meta-mb',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Table margin</span><div class="dc"><input type="number" class="si" id="sp-table-my" value="200" min="0" max="400" oninput="setSP('--table-my',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Row padding</span><div class="dc"><input type="number" class="si" id="sp-row-py" value="16" min="2" max="24" oninput="setSP('--row-py',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Shipping Mark ↑</span><div class="dc"><input type="number" class="si" id="sp-mt-smark" value="-19" min="-40" max="80" oninput="setSP('--mt-smark',this.value)"><span class="su">px</span></div></div>
+      <div class="dr"><span class="dl">Name ↑</span><div class="dc"><input type="number" class="si" id="sp-mt-name" value="20" min="-40" max="80" oninput="setSP('--mt-name',this.value)"><span class="su">px</span></div></div>
     </div>
 
     <button class="btn-gold" onclick="resetAll()">&#8617; Reset All to Defaults</button>
@@ -480,16 +480,16 @@ var FONT_DEFAULTS={
 
 /* spacing CSS var → input id → default value */
 var SPACING_MAP=[
-  {cssVar:'--pad-h',     id:'sp-pad-h',       def:'32'},
-  {cssVar:'--pad-v',     id:'sp-pad-v',       def:'28'},
-  {cssVar:'--header-top',id:'sp-header-top',  def:'20'},
-  {cssVar:'--header-gap',id:'sp-header-gap',  def:'-8'},
-  {cssVar:'--titlebar-my',id:'sp-titlebar-my',def:'43'},
-  {cssVar:'--meta-mb',   id:'sp-meta-mb',     def:'60'},
-  {cssVar:'--table-my',  id:'sp-table-my',    def:'6'},
-  {cssVar:'--row-py',    id:'sp-row-py',      def:'8'},
-  {cssVar:'--mt-smark',  id:'sp-mt-smark',    def:'18'},
-  {cssVar:'--mt-name',   id:'sp-mt-name',     def:'10'}
+  {cssVar:'--pad-h',      id:'sp-pad-h',       def:'32'},
+  {cssVar:'--pad-v',      id:'sp-pad-v',       def:'28'},
+  {cssVar:'--header-top', id:'sp-header-top',  def:'31'},
+  {cssVar:'--header-gap', id:'sp-header-gap',  def:'42'},
+  {cssVar:'--titlebar-my',id:'sp-titlebar-my', def:'18'},
+  {cssVar:'--meta-mb',    id:'sp-meta-mb',     def:'-160'},
+  {cssVar:'--table-my',   id:'sp-table-my',    def:'200'},
+  {cssVar:'--row-py',     id:'sp-row-py',      def:'16'},
+  {cssVar:'--mt-smark',   id:'sp-mt-smark',    def:'-19'},
+  {cssVar:'--mt-name',    id:'sp-mt-name',     def:'20'}
 ];
 
 /* ── Helpers ── */
