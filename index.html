@@ -568,9 +568,9 @@ function boot(){
     loadSpacing();
     var tBank=lsGet(LS.TOG_BANKING),tSoc=lsGet(LS.TOG_SOCIALS);
     var opEl=g('bg-op'),opVEl=g('bg-op-v'),szEl2=g('bg-sz');
-    var op=lsGet(LS.BGOP)||'15',sz=lsGet(LS.BGSZ)||'cover';
+    var op=lsGet(LS.BGOP)||'5',sz=lsGet(LS.BGSZ)||'cover';
     if(opEl)opEl.value=op;if(opVEl)opVEl.value=op;if(szEl2)szEl2.value=sz;
-    var savedBg=lsGet(LS.BG);
+    var savedBg = lsGet(LS.BG) || 'https://i.ibb.co.com/bg24kbKq/Red-Logo-Black-text.png';
     if(savedBg){
       applyBgImg(savedBg,true);
       var tBgSaved=lsGet(LS.TOG_BG);
